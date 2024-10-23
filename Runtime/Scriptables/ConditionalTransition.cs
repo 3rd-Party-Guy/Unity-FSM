@@ -21,7 +21,7 @@ namespace ThirdPartyGuy.FSM
         [SerializeField] bool isLateUpdateCheck;
 
         public virtual void Initialize(Blackboard context) { }
-        public virtual void Check(Blackboard context) { }
+        public virtual bool Check(Blackboard context) { return false; }
 
         protected void TriggerTransition()
         {
