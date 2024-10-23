@@ -1,0 +1,18 @@
+{
+    "name": "com.3rdpartyguy.Editor.fsm",
+    "rootNamespace": "ThirdPartyGuy.FSM.Editor",
+    "references": [
+        "GUID:2fe6af2fbb7423d41bf645572b5d6555"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

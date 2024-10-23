@@ -1,0 +1,16 @@
+{
+    "name": "com.3rd-party-guy.fsm",
+    "version": "1.0.0",
+    "displayName": "FSM",
+    "description": "Create modular finite state machines",
+    "author": {
+        "name": "Nikolay Hadzhiev",
+        "email": "nikolayhadzhiev@outlook.com",
+        "url": "https://github.com/3rd-Party-Guy"
+    },
+    "keywords": [
+        "FSM",
+        "Finite State Machine",
+        "Modular"
+    ]
+}
