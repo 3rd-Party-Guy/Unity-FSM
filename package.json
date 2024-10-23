@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "displayName": "FSM",
     "description": "Create modular finite state machines",
+    "dependencies": {
+        "com.3rd-party-guy.collections.blackboard": "1.0.0"
+    },
     "author": {
         "name": "Nikolay Hadzhiev",
         "email": "nikolayhadzhiev@outlook.com",
