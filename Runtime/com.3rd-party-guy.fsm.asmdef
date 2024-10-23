@@ -1,7 +1,9 @@
 {
     "name": "com.3rd-party-guy.fsm",
     "rootNamespace": "ThirdPartyGuy.FSM",
-    "references": [],
+    "references": [
+        "GUID:f3b7a49ca9be1ae40b2941dfdc12ebb4"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

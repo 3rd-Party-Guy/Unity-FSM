@@ -1,31 +1,39 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using ThirdPartyGuy.Collections;
 
 namespace ThirdPartyGuy.FSM
 {
     public class StateMachine : MonoBehaviour
     {
-        [SerializeField, SerializeReference] State startState;
-        [SerializeField, SerializeReference] State state;
+        [SerializeField] State startState;
+        [SerializeField] BlackboardData blackboardInitializationData;
 
-        public State State => state;
+        public State State { get; private set; }
+        Blackboard blackboard = new();
 
         IEnumerable<ConditionalTransition> checks;
         IEnumerable<ConditionalTransition> updateChecks;
         IEnumerable<ConditionalTransition> fixedUpdateChecks;
+        IEnumerable<ConditionalTransition> lateUpdateChecks;
+
+        private void Awake()
+        {
+            blackboardInitializationData.SetValuesOnBlackboard(blackboard);
+        }
 
         public void ChangeState(State newState)
         {
             if (newState == null)
             {
-                Debug.LogError("3rd-Party-Guy.FSM: Attempting to change to a null state");
+                Debug.LogError("3rd-Party-Guy.FSM: Attempting to change to a null State");
                 return;
             }
 
-            state.Behaviours.OnExit();
-            state = newState;
-            state.Behaviours.OnEnter();
+            State.Behaviours.OnExit(blackboard);
+            State = newState;
+            State.Behaviours.OnEnter(blackboard);
 
             UpdateCheckLists();
         }
@@ -43,21 +51,31 @@ namespace ThirdPartyGuy.FSM
 
         void Update()
         {
-            state.Behaviours.Update();
+            State.Behaviours.Update(blackboard);
 
             foreach (var check in updateChecks)
             {
-                check.Check();
+                check.Check(blackboard);
             }
         }
 
         void FixedUpdate()
         {
-            state.Behaviours.FixedUpdate();
+            State.Behaviours.FixedUpdate(blackboard);
 
             foreach (var check in fixedUpdateChecks)
             {
-                check.Check();
+                check.Check(blackboard);
+            }
+        }
+
+        private void LateUpdate()
+        {
+            State.Behaviours.LateUpdate(blackboard);
+
+            foreach (var check in lateUpdateChecks)
+            {
+                check.Check(blackboard);
             }
         }
 
@@ -71,12 +89,14 @@ namespace ThirdPartyGuy.FSM
                 }
             }
 
-            checks = state.Transitions;
+            checks = State.Transitions;
             updateChecks = checks.Where(e => e.IsUpdateCheck);
             fixedUpdateChecks = checks.Where(e => e.IsFixedUpdateCheck);
+            lateUpdateChecks = checks.Where(e => e.IsLateUpdateCheck);
 
             foreach (var check in checks)
             {
+                check.Initialize(blackboard);
                 check.OnTransitionTrigger += OnTransitionTriggered;
             }
         }

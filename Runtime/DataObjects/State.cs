@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ThirdPartyGuy.FSM
 {
-    [CreateAssetMenu(fileName = "State", menuName = "3rdPartyGuy/FSM/State", order = 1)]
+    [CreateAssetMenu(fileName = "State", menuName = "3rd-Party-Guy/FSM/State", order = 1)]
     public sealed class State : ScriptableObject
     {
         [SerializeReference] List<ConditionalTransition> transitions;
