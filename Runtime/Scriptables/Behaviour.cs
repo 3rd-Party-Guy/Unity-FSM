@@ -14,7 +14,7 @@ namespace ThirdPartyGuy.FSM
         public virtual void OnExit(Blackboard context) { }
     }
 
-    public static class BheaviourExtensions
+    public static class BehaviourExtensions
     {
         public static void OnEnter(this IEnumerable<Behaviour> behaviours, Blackboard blackboard)
         {

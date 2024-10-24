@@ -9,7 +9,7 @@ namespace ThirdPartyGuy.FSM
         Blackboard context;
         string randID;
 
-        Property(Blackboard blackboard, T initial = default)
+        public Property(Blackboard blackboard, T initial = default)
         {
             randID = Guid.NewGuid().ToString();
             context = blackboard;
