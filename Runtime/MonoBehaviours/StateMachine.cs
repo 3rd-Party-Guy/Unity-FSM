@@ -11,7 +11,7 @@ namespace ThirdPartyGuy.FSM
         [SerializeField] BlackboardData blackboardInitializationData;
 
         public State State { get; private set; }
-        Blackboard blackboard = new();
+        public Blackboard Blackboard { get; } = new();
 
         IEnumerable<ConditionalTransition> checks;
         IEnumerable<ConditionalTransition> updateChecks;
@@ -20,7 +20,10 @@ namespace ThirdPartyGuy.FSM
 
         private void Awake()
         {
-            blackboardInitializationData.SetValuesOnBlackboard(blackboard);
+            if (blackboardInitializationData != null)
+            {
+                blackboardInitializationData.SetValuesOnBlackboard(Blackboard);
+            }
         }
 
         public void ChangeState(State newState)
@@ -31,9 +34,9 @@ namespace ThirdPartyGuy.FSM
                 return;
             }
 
-            State.Behaviours.OnExit(blackboard);
+            State.Behaviours.OnExit(Blackboard);
             State = newState;
-            State.Behaviours.OnEnter(blackboard);
+            State.Behaviours.OnEnter(Blackboard);
 
             UpdateCheckLists();
         }
@@ -51,31 +54,31 @@ namespace ThirdPartyGuy.FSM
 
         void Update()
         {
-            State.Behaviours.Update(blackboard);
+            State.Behaviours.Update(Blackboard);
 
             foreach (var check in updateChecks)
             {
-                check.Check(blackboard);
+                check.Check(Blackboard);
             }
         }
 
         void FixedUpdate()
         {
-            State.Behaviours.FixedUpdate(blackboard);
+            State.Behaviours.FixedUpdate(Blackboard);
 
             foreach (var check in fixedUpdateChecks)
             {
-                check.Check(blackboard);
+                check.Check(Blackboard);
             }
         }
 
         private void LateUpdate()
         {
-            State.Behaviours.LateUpdate(blackboard);
+            State.Behaviours.LateUpdate(Blackboard);
 
             foreach (var check in lateUpdateChecks)
             {
-                check.Check(blackboard);
+                check.Check(Blackboard);
             }
         }
 
@@ -96,7 +99,7 @@ namespace ThirdPartyGuy.FSM
 
             foreach (var check in checks)
             {
-                check.Initialize(blackboard);
+                check.Initialize(Blackboard);
                 check.OnTransitionTrigger += OnTransitionTriggered;
             }
         }
