@@ -49,11 +49,13 @@ namespace ThirdPartyGuy.FSM
                 return;
             }
 
-            ChangeState(startState);
+            State = startState;
+            UpdateCheckLists();
         }
 
         void Update()
         {
+            Debug.Log($"State: {State}");
             State.Behaviours.Update(Blackboard);
 
             foreach (var check in updateChecks)
@@ -104,9 +106,9 @@ namespace ThirdPartyGuy.FSM
             }
         }
 
-        void OnTransitionTriggered(object sender, ConditionalTransition transition)
+        void OnTransitionTriggered(object sender, State targetState)
         {
-            ChangeState(transition.TargetState);
+            ChangeState(targetState);
         }
     }
 }
