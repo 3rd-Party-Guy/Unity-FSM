@@ -55,7 +55,6 @@ namespace ThirdPartyGuy.FSM
 
         void Update()
         {
-            Debug.Log($"State: {State}");
             State.Behaviours.Update(Blackboard);
 
             foreach (var check in updateChecks)
