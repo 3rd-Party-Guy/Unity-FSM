@@ -26,6 +26,12 @@ namespace ThirdPartyGuy.FSM
             }
         }
 
+        private void OnDestroy()
+        {
+            State.Behaviours.OnExit(Blackboard);
+            Blackboard.Clear();
+        }
+
         public void ChangeState(State newState)
         {
             if (newState == null)
